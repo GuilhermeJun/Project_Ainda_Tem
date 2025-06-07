@@ -3,7 +3,7 @@ FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
-RUN mvn package -DskipTests
+RUN ./mvnw package -DskipTests
 
 # Runtime
 FROM eclipse-temurin:17-jdk
