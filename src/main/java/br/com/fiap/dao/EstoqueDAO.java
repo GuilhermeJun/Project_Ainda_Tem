@@ -1,9 +1,11 @@
 package br.com.fiap.dao;
 
+import br.com.fiap.SolicitacaoResource;
 import br.com.fiap.beans.Categoria;
 import br.com.fiap.beans.Estoque;
 import br.com.fiap.beans.Item;
 import br.com.fiap.beans.PontoDistribuicao;
+import br.com.fiap.bo.EstoqueBO;
 import br.com.fiap.conexoes.ConexaoFactory;
 
 import java.sql.Connection;
@@ -47,7 +49,17 @@ public class EstoqueDAO {
         return "Estoque atualizado com sucesso";
     }
 
-    public String deletar(int codigo) throws SQLException {
+    public String deletarReferenciaSolicitacao(int codigo) throws SQLException {
+        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM SOLICITACAO WHERE FK_EST = ?");
+        stmt.setInt(1, codigo);
+        stmt.execute();
+        stmt.close();
+        return "Referência do estoque na solicitação deletado com sucesso!";
+    }
+
+    public String deletar(int codigo) throws SQLException, ClassNotFoundException {
+        EstoqueDAO estoqueDAO = new EstoqueDAO();
+        estoqueDAO.deletarReferenciaSolicitacao(codigo);
         PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM ESTOQUE WHERE COD_EST = ?");
         stmt.setInt(1, codigo);
         stmt.execute();

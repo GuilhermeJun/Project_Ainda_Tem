@@ -31,7 +31,26 @@ public class OrganizacaoDAO {
         return "Organizacao cadastrada com sucesso";
     }
 
-    public String deletar(int codigo) throws SQLException {
+    public String deletarReferenciaUsuario(int codigo) throws SQLException {
+        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM USUARIO WHERE FK_ORG = ?");
+        stmt.setInt(1, codigo);
+        stmt.execute();
+        stmt.close();
+        return "Referência da organização no usuário deletado com sucesso!";
+    }
+
+    public String deletarReferenciaPontoDistribuicao(int codigo) throws SQLException {
+        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM PONTO_DISTRIBUICAO WHERE FK_ORG = ?");
+        stmt.setInt(1, codigo);
+        stmt.execute();
+        stmt.close();
+        return "Referência da organização no ponto de distribuicão deletado com sucesso!";
+    }
+
+    public String deletar(int codigo) throws SQLException, ClassNotFoundException {
+        OrganizacaoDAO organizacaoDAO = new OrganizacaoDAO();
+        organizacaoDAO.deletarReferenciaUsuario(codigo);
+        organizacaoDAO.deletarReferenciaPontoDistribuicao(codigo);
         PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM ORGANIZACAO WHERE COD_ORG = ?");
         stmt.setInt(1, codigo);
         stmt.execute();

@@ -32,9 +32,27 @@ public class ItemDAO {
         return "Item cadastrado com sucesso";
     }
 
-    public String deletar (int codigo) throws SQLException {
-        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM ITEM WHERE COD_ITEM = ?");
+    public String deletarReferenciaEstoque(int codigo) throws SQLException {
+        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM ESTOQUE WHERE FK_ITEM = ?");
+        stmt.setInt(1, codigo);
+        stmt.execute();
+        stmt.close();
+        return "Referência do item no estoque deletado com sucesso!";
+    }
 
+    public String deletarReferenciaRecurso(int codigo) throws SQLException {
+        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM RECURSO WHERE FK_ITEM = ?");
+        stmt.setInt(1, codigo);
+        stmt.execute();
+        stmt.close();
+        return "Referência do item no recurso deletado com sucesso!";
+    }
+
+    public String deletar (int codigo) throws SQLException, ClassNotFoundException {
+        ItemDAO itemDAO = new ItemDAO();
+        itemDAO.deletarReferenciaEstoque(codigo);
+        itemDAO.deletarReferenciaRecurso(codigo);
+        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM ITEM WHERE COD_ITEM = ?");
         stmt.setInt(1, codigo);
         stmt.execute();
         stmt.close();

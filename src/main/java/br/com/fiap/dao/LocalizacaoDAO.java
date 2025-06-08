@@ -30,7 +30,26 @@ public class LocalizacaoDAO {
         return "Localizacao cadastrada com sucesso";
     }
 
-    public String deletar(String cep) throws SQLException {
+    public String deletarReferenciaRecurso(String cep) throws SQLException {
+        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM RECURSO WHERE FK_LOCAL = ?");
+        stmt.setString(1, cep);
+        stmt.execute();
+        stmt.close();
+        return "Referência da localização no recurso deletado com sucesso!";
+    }
+
+    public String deletarReferenciaPontoDistribuicao(String cep) throws SQLException {
+        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM PONTO_DISTRIBUICAO WHERE FK_LOCAL = ?");
+        stmt.setString(1, cep);
+        stmt.execute();
+        stmt.close();
+        return "Referência da localização no ponto de distribuição deletado com sucesso!";
+    }
+
+    public String deletar(String cep) throws SQLException, ClassNotFoundException {
+        LocalizacaoDAO localizacaoDAO = new LocalizacaoDAO();
+        localizacaoDAO.deletarReferenciaRecurso(cep);
+        localizacaoDAO.deletarReferenciaPontoDistribuicao(cep);
         PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM LOCALIZACAO WHERE CEP = ?");
         stmt.setString(1, cep);
         stmt.execute();

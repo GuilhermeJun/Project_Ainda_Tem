@@ -31,8 +31,18 @@ public class PontoDistribuicaoDAO {
         stmt.close();
         return "Ponto distribuicao cadastrado com sucesso";
     }
+
+    public String deletarReferenciaEstoque(int codigo) throws SQLException {
+        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM ESTOQUE WHERE FK_PONTO = ?");
+        stmt.setInt(1, codigo);
+        stmt.execute();
+        stmt.close();
+        return "Referência do ponto de distribuição no estoque deletado com sucesso!";
+    }
     
-    public String deletar(int codigo) throws SQLException {
+    public String deletar(int codigo) throws SQLException, ClassNotFoundException {
+        PontoDistribuicaoDAO pontoDistribuicaoDAO = new PontoDistribuicaoDAO();
+        pontoDistribuicaoDAO.deletarReferenciaEstoque(codigo);
         PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM PONTO_DISTRIBUICAO WHERE COD_PONTO = ?");
         stmt.setInt(1, codigo);
         stmt.execute();

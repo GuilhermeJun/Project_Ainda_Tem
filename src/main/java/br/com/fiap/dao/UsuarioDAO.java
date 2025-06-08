@@ -21,7 +21,7 @@ public class UsuarioDAO {
     }
 
     public String inserir(Usuario usuario) throws SQLException {
-        PreparedStatement stmt = minhaConexao.prepareStatement("INSERT INTO USUARIO VALUES (?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement stmt = minhaConexao.prepareStatement("INSERT INTO USUARIO VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         stmt.setInt(1, usuario.getCodigo());
         stmt.setString(2, usuario.getNome());
         stmt.setInt(3, usuario.getIdade());
@@ -29,6 +29,7 @@ public class UsuarioDAO {
         stmt.setString(5, usuario.getEmail());
         stmt.setString(6, usuario.getSenha());
         stmt.setString(7, usuario.getTipoUsuario());
+        stmt.setInt(8, usuario.getOrganizacao().getCodigo());
         stmt.execute();
         stmt.close();
         return "Usuario cadastrado com sucesso";
@@ -48,8 +49,27 @@ public class UsuarioDAO {
         return "Usuario atualizado com sucesso";
     }
 
-    public String deletar(int codigo) throws SQLException {
-        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM USUARIO WHERE CODIGO = ?");
+    public String deletarReferenciaSolicitacao(int codigo) throws SQLException {
+        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM SOLICITACAO WHERE FK_USU = ?");
+        stmt.setInt(1, codigo);
+        stmt.execute();
+        stmt.close();
+        return "Referência do usuário na solicitação deletado com sucesso!";
+    }
+
+    public String deletarReferenciaRecurso(int codigo) throws SQLException {
+        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM RECURSO WHERE FK_USU = ?");
+        stmt.setInt(1, codigo);
+        stmt.execute();
+        stmt.close();
+        return "Referência do usuário no recurso deletado com sucesso!";
+    }
+
+    public String deletar(int codigo) throws SQLException, ClassNotFoundException {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        usuarioDAO.deletarReferenciaSolicitacao(codigo);
+        usuarioDAO.deletarReferenciaRecurso(codigo);
+        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM USUARIO WHERE COD_USU = ?");
         stmt.setInt(1, codigo);
         stmt.execute();
         stmt.close();

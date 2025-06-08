@@ -35,7 +35,17 @@ public class RecursoDAO {
         return "Recurso cadastrado com sucesso";
     }
 
-    public String deletar(int codigo) throws SQLException {
+    public String deletarReferenciaSolicitacao(int codigo) throws SQLException {
+        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM SOLICITACAO WHERE FK_REC = ?");
+        stmt.setInt(1, codigo);
+        stmt.execute();
+        stmt.close();
+        return "Referência do recurso na solicitação deletado com sucesso!";
+    }
+
+    public String deletar(int codigo) throws SQLException, ClassNotFoundException {
+        RecursoDAO recursoDAO = new RecursoDAO();
+        recursoDAO.deletarReferenciaSolicitacao(codigo);
         PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM RECURSO WHERE COD_REC = ?");
         stmt.setInt(1, codigo);
         stmt.execute();
