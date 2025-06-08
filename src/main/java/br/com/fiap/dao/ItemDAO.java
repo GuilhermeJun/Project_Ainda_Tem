@@ -33,7 +33,7 @@ public class ItemDAO {
     }
 
     public String deletar (int codigo) throws SQLException {
-        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM ITEM WHERE CODIGO = ?");
+        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM ITEM WHERE COD_ITEM = ?");
 
         stmt.setInt(1, codigo);
         stmt.execute();

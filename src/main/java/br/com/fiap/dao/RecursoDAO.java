@@ -36,7 +36,7 @@ public class RecursoDAO {
     }
 
     public String deletar(int codigo) throws SQLException {
-        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM RECURSO WHERE CODIGO = ?");
+        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM RECURSO WHERE COD_REC = ?");
         stmt.setInt(1, codigo);
         stmt.execute();
         stmt.close();

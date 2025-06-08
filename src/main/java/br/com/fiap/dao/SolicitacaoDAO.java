@@ -36,7 +36,7 @@ public class SolicitacaoDAO {
     }
 
     public String deletar(int codigo) throws SQLException {
-        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM SOLICITACAO WHERE CODIGO = ?");
+        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM SOLICITACAO WHERE COD_SOLIC = ?");
         stmt.setInt(1, codigo);
         stmt.execute();
         return "Solicitacao deletada com sucesso!";

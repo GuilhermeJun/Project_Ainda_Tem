@@ -33,7 +33,7 @@ public class PontoDistribuicaoDAO {
     }
     
     public String deletar(int codigo) throws SQLException {
-        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM PONTO_DISTRIBUICAO WHERE CODIGO = ?");
+        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM PONTO_DISTRIBUICAO WHERE COD_PONTO = ?");
         stmt.setInt(1, codigo);
         stmt.execute();
         stmt.close();

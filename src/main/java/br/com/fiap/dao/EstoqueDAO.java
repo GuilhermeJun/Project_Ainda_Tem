@@ -35,20 +35,20 @@ public class EstoqueDAO {
     }
 
     public String atualizar(Estoque estoque) throws SQLException {
-        PreparedStatement stmt = minhaConexao.prepareStatement("UPDATE ESTOQUE SET NOME_EST = ?, QUANTIDADE = ?, ULTIMA_ATUA = ?, FK_ITEM = ?, FK_PONTO_DISTRIBUICAO = ? WHERE CODIGO = ?");
+        PreparedStatement stmt = minhaConexao.prepareStatement("UPDATE ESTOQUE SET NOME_EST = ?, QUANTIDADE = ?, ULTIMA_ATUA = ?, FK_ITEM = ?, FK_PONTO = ? WHERE COD_EST = ?");
         stmt.setString(1, estoque.getNome());
         stmt.setInt(2, estoque.getQuantidade());
         stmt.setTimestamp(3, estoque.getUltimaAtualizacao());
         stmt.setInt(4, estoque.getItem().getCodigo());
         stmt.setInt(5, estoque.getPontoDistribuicao().getCodigo());
         stmt.setInt(6, estoque.getCodigo());
-        stmt.execute();
+        stmt.executeUpdate();
         stmt.close();
         return "Estoque atualizado com sucesso";
     }
 
     public String deletar(int codigo) throws SQLException {
-        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM ESTOQUE WHERE CODIGO = ?");
+        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM ESTOQUE WHERE COD_EST = ?");
         stmt.setInt(1, codigo);
         stmt.execute();
         stmt.close();

@@ -30,8 +30,10 @@ public class EstoqueResource {
     }
 
     @PUT
+    @Path("{codigo}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response atualizarRs(Estoque estoque, @PathParam("codigo") int codigo) throws SQLException, ClassNotFoundException {
+        estoque.setCodigo(codigo);
         estoqueBO.atualizarBO(estoque);
         return Response.ok().build();
     }

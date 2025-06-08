@@ -35,7 +35,7 @@ public class UsuarioDAO {
     }
 
     public String atualizar(Usuario usuario) throws SQLException {
-        PreparedStatement stmt = minhaConexao.prepareStatement("UPDATE USUARIO SET NOME = ?, IDADE = ?, TELEFONE = ?, EMAIL = ?, SENHA = ?, TIPO_USUARIO = ? WHERE CODIGO = ?");
+        PreparedStatement stmt = minhaConexao.prepareStatement("UPDATE USUARIO SET NOME_USU = ?, IDADE = ?, TELEFONE = ?, EMAIL = ?, SENHA = ?, TIPO_USU = ? WHERE COD_USU = ?");
         stmt.setString(1, usuario.getNome());
         stmt.setInt(2, usuario.getIdade());
         stmt.setString(3, usuario.getTelefone());
@@ -43,7 +43,7 @@ public class UsuarioDAO {
         stmt.setString(5, usuario.getSenha());
         stmt.setString(6, usuario.getTipoUsuario());
         stmt.setInt(7, usuario.getCodigo());
-        stmt.execute();
+        stmt.executeUpdate();
         stmt.close();
         return "Usuario atualizado com sucesso";
     }

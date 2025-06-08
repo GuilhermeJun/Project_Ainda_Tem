@@ -32,7 +32,7 @@ public class OrganizacaoDAO {
     }
 
     public String deletar(int codigo) throws SQLException {
-        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM ORGANIZACAO WHERE CODIGO = ?");
+        PreparedStatement stmt = minhaConexao.prepareStatement("DELETE FROM ORGANIZACAO WHERE COD_ORG = ?");
         stmt.setInt(1, codigo);
         stmt.execute();
         stmt.close();
